@@ -4,11 +4,12 @@ import (
   "fmt"
   "flag"
   "spider/internal/types"
+  "spider/internal/scraper"
 )
 
 
 func main() {
-  var opt types.SpiderOption
+  var opt types.Option
 
   flag.BoolVar(&opt.Recursive, "r", false, "Recursively downloads the images in a URL received as a parameter")
   flag.IntVar(&opt.Depth, "l", 5, "Maximum depth level of the recursive download")
@@ -24,5 +25,5 @@ func main() {
 
   opt.Target = args[0]
 
-  // fmt.Printf("Download all images from '%s', if it is recursive (%v), the depth is %d and the storage path is '%s'\n", options.url, options.recursive, options.depth, options.path)
+  scraper.Spider(args[0], &opt, 0)
 }

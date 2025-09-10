@@ -1,15 +1,14 @@
 package types
 
-type SpiderOption struct {
+type Option struct {
   Recursive bool
   Depth     int
   Path      string
   Target    string
 }
 
-type SpiderData struct {
-  Target  string
+type Page struct {
+  URL     string
   Images  []string
-  Urls    []string
+  Links   []string
 }
-
