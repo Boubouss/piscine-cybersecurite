@@ -4,10 +4,29 @@ import (
   "fmt"
   "spider/internal/types"
   "spider/internal/storage"
+  "net/http"
+  "io"
 )
 
 func fetchHTML(url string) (string, error) {
-  return url, nil
+  resp, err := http.Get(url)
+  if err != nil {
+    return "", fmt.Errorf("Error while fetching %v", url)
+  }
+
+  defer resp.Body.Close()
+  
+  if resp.StatusCode != http.StatusOK {
+    return "", fmt.Errorf("Status code => %v", resp.StatusCode)
+  }
+  
+  body, err := io.ReadAll(resp.Body)
+  
+  if err != nil {
+    return "", err
+  }
+  
+  return string(body), nil
 }
 
 func parseHTML(content string, page *types.Page) {
@@ -21,7 +40,7 @@ func Spider(url string, option *types.Option, recursion int) {
   content, err := fetchHTML(page.URL)
 
   if err != nil {
-    fmt.Errorf("Error %v while fetching url : %v\n", err, page.URL)
+    fmt.Printf("Error : %v\n", err)
     return
   }
 
