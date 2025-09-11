@@ -23,7 +23,5 @@ func main() {
     return
   }
 
-  opt.Target = args[0]
-
   scraper.Spider(args[0], &opt, 0)
 }

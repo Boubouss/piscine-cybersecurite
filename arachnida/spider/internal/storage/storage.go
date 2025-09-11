@@ -12,6 +12,6 @@ func createFile() {
 
 }
 
-func SaveImages(images *[]string, option *types.Option) {
+func SaveImages(page *types.Page) {
 
 }

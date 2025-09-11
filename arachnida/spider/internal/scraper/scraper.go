@@ -6,6 +6,7 @@ import (
   "spider/internal/storage"
   "net/http"
   "io"
+  "spider/internal/parser"
 )
 
 func fetchHTML(url string) (string, error) {
@@ -29,13 +30,9 @@ func fetchHTML(url string) (string, error) {
   return string(body), nil
 }
 
-func parseHTML(content string, page *types.Page) {
-
-}
-
 func Spider(url string, option *types.Option, recursion int) {
-  fmt.Printf("SPIDER : %v, %v\n", url, *option)
-  page := types.Page{ URL: url }
+  // fmt.Printf("SPIDER : %v, %v\n", url, *option)
+  page := types.Page{ URL: url, DOMAIN: parser.GetDomain(url), OPT: option}
 
   content, err := fetchHTML(page.URL)
 
@@ -44,9 +41,14 @@ func Spider(url string, option *types.Option, recursion int) {
     return
   }
 
-  parseHTML(content, &page)
+  err = parser.ParseHTML(content, &page)
+  
+  if err != nil {
+    fmt.Printf("Error : %v\n", err)
+    return
+  }
 
-  storage.SaveImages(&page.Images, option)
+  storage.SaveImages(&page)
 
   if option.Recursive && recursion < option.Depth {
     for _, target := range page.Links {
