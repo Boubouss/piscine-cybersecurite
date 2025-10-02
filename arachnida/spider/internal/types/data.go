@@ -7,7 +7,7 @@ import (
 
 type Option struct {
   Recursive bool
-  Depth     int
+  MaxDepth  int
   Path      string
 }
 
@@ -17,6 +17,12 @@ type Page struct {
   OPT     *Option
   Images  []string
   Links   []string
+  Depth   int
+}
+
+type Image struct {
+  URL string
+  OPT *Option
 }
 
 func (p *Page) AddLink(link string) {
@@ -24,7 +30,16 @@ func (p *Page) AddLink(link string) {
   p.Links = append(p.Links, link)
 }
 
+func isGoodFormat(image string) (bool) {
+  formats := []string{".jpg", ".jpeg", ".png", ".gif", ".bmp" }
+  
+  for _, f := range formats {
+    if strings.HasSuffix(image, f) { return true }  
+  }
+  return false
+}
+
 func (p *Page) AddImage(image string) {
-  if slices.Contains(p.Images, image) { return }
+  if slices.Contains(p.Images, image) || !isGoodFormat(image) { return }
   p.Images = append(p.Images, image)
 }

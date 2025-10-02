@@ -10,7 +10,7 @@ import (
 
 func extractImage(node *html.Node, page *types.Page) {
   for _, attr := range node.Attr {
-    if attr.Key == "src" { page.AddImage(FormatUrl(attr.Val, page.DOMAIN))}
+    if attr.Key == "src" { page.AddImage(FormatUrl(attr.Val, page.DOMAIN)) }
   }
 }
 
@@ -43,8 +43,8 @@ func ParseHTML(content string, page *types.Page) (error) {
   
   parseTree(document, page)
 
-  fmt.Printf("Images : %v\n", page.Images)
-  fmt.Printf("Liens : %v\n", page.Links)
+  // fmt.Printf("Images : %v\n", page.Images)
+  // fmt.Printf("Liens : %v\n", page.Links)
 
   return nil
 }

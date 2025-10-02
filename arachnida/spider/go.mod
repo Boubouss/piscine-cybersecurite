@@ -4,4 +4,7 @@ go 1.25.1
 
 // go 1.18
 
-require golang.org/x/net v0.44.0 // indirect
+require (
+	github.com/google/uuid v1.6.0 // indirect
+	golang.org/x/net v0.44.0 // indirect
+)

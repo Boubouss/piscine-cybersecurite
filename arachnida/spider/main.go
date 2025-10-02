@@ -12,7 +12,7 @@ func main() {
   var opt types.Option
 
   flag.BoolVar(&opt.Recursive, "r", false, "Recursively downloads the images in a URL received as a parameter")
-  flag.IntVar(&opt.Depth, "l", 5, "Maximum depth level of the recursive download")
+  flag.IntVar(&opt.MaxDepth, "l", 5, "Maximum depth level of the recursive download")
   flag.StringVar(&opt.Path, "p", "./data/", "Path where the downloaded files will be saved")
   flag.Parse()
   
@@ -23,5 +23,5 @@ func main() {
     return
   }
 
-  scraper.Spider(args[0], &opt, 0)
+  scraper.Spider(args[0], &opt)
 }
