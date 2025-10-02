@@ -20,3 +20,26 @@ func (v *Visited) IsVisited(url string) (bool) {
   return false
 }
 
+type Counter struct {
+  mutex   sync.Mutex
+  counter int 
+}
+
+func (c *Counter) Add() {
+  c.mutex.Lock()
+  c.counter++
+  c.mutex.Unlock()
+}
+
+func (c *Counter) Dec() {
+  c.mutex.Lock()
+  c.counter--
+  c.mutex.Unlock()
+}
+
+func (c *Counter) Get() (int) {
+  c.mutex.Lock() 
+  count := c.counter
+  c.mutex.Unlock()
+  return count
+}
